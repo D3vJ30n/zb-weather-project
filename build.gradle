@@ -29,13 +29,16 @@ dependencies {
         exclude group: "org.slf4j", module: "slf4j-simple"
     }
 
-//    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    // implementation 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
     runtimeOnly 'com.h2database:h2'
 
     // MariaDB
-    implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.1'
+    // implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.1'
+
+    // mysql
+    implementation 'com.mysql:mysql-connector-j'
 
     // Jackson (Spring Boot 관리 버전 사용)
     implementation 'com.fasterxml.jackson.core:jackson-databind'
