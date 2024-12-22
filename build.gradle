@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'war'
     id 'application'
-    id 'org.springframework.boot' version '3.4.0'
+    id 'org.springframework.boot' version '3.4.1'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -14,8 +14,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+// 의존성 관리
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -23,46 +25,84 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
-    implementation 'org.redisson:redisson:3.40.1'
-    implementation('it.ozimov:embedded-redis:0.7.3') {
-        exclude group: "org.slf4j", module: "slf4j-simple"
-    }
+    // RestTemplate 사용을 위한 Apache HttpComponents 추가
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4'
 
-    // implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    // Redis
+    implementation 'org.redisson:redisson-spring-boot-starter:3.23.5'
+    implementation 'com.github.kstyrc:embedded-redis:0.6'
+
+    // 로깅
+    implementation 'org.slf4j:slf4j-api'
+
+    // 테스트용 임베디드 Redis
+    testImplementation 'it.ozimov:embedded-redis:0.7.3'
+
+    // Jakarta
     implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
+    // H2 (테스트용)
     runtimeOnly 'com.h2database:h2'
 
-    // MariaDB
-    // implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.1'
-
-    // mysql
+    // MySQL
     implementation 'com.mysql:mysql-connector-j'
 
-    // Jackson (Spring Boot 관리 버전 사용)
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
-
     // Lombok
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.json:json:20230227'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.mockito:mockito-core:5.5.0'
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'org.slf4j:slf4j-api:1.7.36'
+    }
+    exclude group: 'org.slf4j', module: 'slf4j-simple'
+}
+
+// 래퍼 설정
 wrapper {
     gradleVersion = '8.11.1'
     distributionType = Wrapper.DistributionType.BIN
 }
 
+// 테스트 설정
 test {
     useJUnitPlatform()
+    exclude '**/LibraryTest.class'
 }
 
 // 메인 클래스 설정
 springBoot {
-    mainClassName = 'com.example.demo.DemoApplication'
+    mainClassName = 'com.example.demo.WeatherApplication'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ["-parameters"]
+}
+
+// 소스 디렉토리 설정
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
 }

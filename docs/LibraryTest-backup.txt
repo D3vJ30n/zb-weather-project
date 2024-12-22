@@ -1,5 +1,4 @@
 /*
- * This is a backup of the original LibraryTest class.
  * It is stored for reference purposes only.
  */
 
