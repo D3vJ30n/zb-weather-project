@@ -24,7 +24,7 @@ public class DiaryController {
     @Operation(summary = "일기 생성", description = "날짜와 일기 내용을 입력하여 날씨 일기를 생성합니다.")
     @PostMapping("/create/diary")
     public ResponseEntity<Void> createDiary(
-        @Parameter(description = "날짜", example = "2023-12-23")
+        @Parameter(description = "날짜", example = "2024-12-23")
         @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
         @Valid @RequestBody DiaryRequestDTO requestDTO) {
         diaryService.createDiary(date, requestDTO);
@@ -34,7 +34,7 @@ public class DiaryController {
     @Operation(summary = "일기 조회", description = "특정 날짜의 모든 일기를 조회합니다.")
     @GetMapping("/read/diary")
     public ResponseEntity<List<DiaryResponseDTO>> readDiary(
-        @Parameter(description = "날짜", example = "2023-12-23")
+        @Parameter(description = "날짜", example = "2024-12-23")
         @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.ok(diaryService.readDiary(date));
     }
@@ -42,9 +42,9 @@ public class DiaryController {
     @Operation(summary = "기간별 일기 조회", description = "특정 기간의 모든 일기를 조회합니다.")
     @GetMapping("/read/diaries")
     public ResponseEntity<List<DiaryResponseDTO>> readDiaries(
-        @Parameter(description = "시작 날짜", example = "2023-12-01")
+        @Parameter(description = "시작 날짜", example = "2024-12-01")
         @RequestParam(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-        @Parameter(description = "종료 날짜", example = "2023-12-23")
+        @Parameter(description = "종료 날짜", example = "2024-12-23")
         @RequestParam(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return ResponseEntity.ok(diaryService.readDiaries(startDate, endDate));
     }
@@ -52,7 +52,7 @@ public class DiaryController {
     @Operation(summary = "일기 수정", description = "특정 날짜의 첫 번째 일기를 수정합니다.")
     @PutMapping("/update/diary")
     public ResponseEntity<Void> updateDiary(
-        @Parameter(description = "날짜", example = "2023-12-23")
+        @Parameter(description = "날짜", example = "2024-12-23")
         @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
         @Valid @RequestBody DiaryRequestDTO requestDTO) {
         diaryService.updateDiary(date, requestDTO);
@@ -62,7 +62,7 @@ public class DiaryController {
     @Operation(summary = "일기 삭제", description = "특정 날짜의 모든 일기를 삭제합니다.")
     @DeleteMapping("/delete/diary")
     public ResponseEntity<Void> deleteDiary(
-        @Parameter(description = "날짜", example = "2023-12-23")
+        @Parameter(description = "날짜", example = "2024-12-23")
         @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         diaryService.deleteDiary(date);
         return ResponseEntity.ok().build();

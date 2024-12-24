@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @TestPropertySource(properties = {
     "openweather.api-key=5d434267d672e84f5d7a7b1c4a9d6b11",
-    "openweather.base-url=https://api.openweathermap.org/data/2.5"
+    "openweather.base-url=https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=%s&units=metric&lang=kr"
 })
 class WeatherRepositoryTest {
 

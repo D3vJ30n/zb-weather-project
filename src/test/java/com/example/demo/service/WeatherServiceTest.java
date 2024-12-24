@@ -53,8 +53,14 @@ class WeatherServiceTest {
         weatherDTO.setWeather("Clear");
         weatherDTO.setIcon("01d");
         weatherDTO.setTemperature(20.0);
-        
-        given(weatherApiClient.getWeatherData()).willReturn(weatherDTO);
+
+// 중복 선언된 변수 제거
+        double latitude = 37.5172;
+        double longitude = 127.0473;
+
+// 이미 선언된 weatherDTO와 date를 재사용
+// Mock 설정
+        given(weatherApiClient.getWeatherData(latitude, longitude)).willReturn(weatherDTO);
         given(dateWeatherRepository.findById(date)).willReturn(Optional.empty());
 
         Diary diary = Diary.builder()
